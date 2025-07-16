@@ -3,9 +3,10 @@ services:
   odoo-stack:
     container_name: odoo-stack
     build:
-      context: ./dockerfile
-      dockerfile: odoo.Dockerfile
+      context: .
+      dockerfile: dockerfile/odoo.Dockerfile
     volumes:
+      # - ./create_odoo_db_interactive.sh:/usr/local/bin/create_odoo_db_interactive.sh
       - ./addons-extra:/mnt/addons-extra
       - /home/bjit/odoo-18.0+e.20241126/odoo/addons:/mnt/enterprise_addons
       - ./odoo-config:/etc/odoo
@@ -13,6 +14,10 @@ services:
 
     ports:
       - 8069:8069
+
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
 
     depends_on:
 
